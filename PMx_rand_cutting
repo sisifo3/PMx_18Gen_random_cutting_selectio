@@ -1,9 +1,7 @@
 function[desc1,desc2] = crossover_PMx_18(pred1,pred2)
-%disp(pred1)
-%disp(pred2)
 
-%nir = randi(12);
-nir = 6;
+nir = randi(12);
+%nir = 3;
 mat_one = zeros(2,12);
 ident_mat = zeros(2,6);
 
@@ -17,37 +15,35 @@ for olp = 1:ner
     mat_one(1,nir+olp) = pred1(nar+olp);
     mat_one(2,nir+olp) = pred2(nar+olp);
 end
-%disp('mat_one')
-%disp(mat_one)
+disp('mat_one')
+disp(mat_one)
 for gh = 1:6
     ident_mat(2,gh) = pred1(gh+nir);
     ident_mat(1,gh) = pred2(gh+nir);
 end
 
-%disp(nir)
-%disp(ident_mat)
 %for this part of the code we have the matrx identidy [ident_mat] and 
 %the matriz for comparation [mat_one]
 %disp(mat_one)
 count_it = 0;
-
-for olq = 1:2
+var_a = [];
+for olq = 1:3
     count_it = count_it + 1;
     count = 0;
-    var_a = [];
+   
     for olr = 1:12
         for olt = 1:6
-            if mat_one(1,olr) == ident_mat(1,olt) && olr ~= olt
+            if mat_one(1,olr) == ident_mat(1,olt) 
                 temp_var_a = mat_one(1,olr);
                 mat_one(1,olr) = mat_one(2,olr);
                 mat_one(2,olr) = temp_var_a;
                 var_a = [var_a,olr];
                 count = count + 1;
             end 
-             if mat_one(2,olr) == ident_mat(2,olt) && olr ~= olt
-                temp_var_a = mat_one(2,olr);
+             if mat_one(2,olr) == ident_mat(2,olt) 
+                temp_var_b = mat_one(2,olr);
                 mat_one(2,olr) = mat_one(1,olr);
-                mat_one(1,olr) = temp_var_a;
+                mat_one(1,olr) = temp_var_b;
                 var_a = [var_a,olr];
                 count = count +1;
             end
@@ -55,32 +51,29 @@ for olq = 1:2
         end
     end    
 
-    %disp(var_a)
-    %disp(mat_one)
-
     %Now we have a array that it's compared and changed depend of the simility of
     %mat_one and ident_mat;
     %it the next we compare mat_one inside for a repeat value.
 
-    for olt = 1:12
+    for olte = 1:12
         for oly = 1:12
-            if mat_one(1,olt) == mat_one(1,oly) && olt ~= oly
-                exist_olt = any(var_a(:) == olt);
-                if exist_olt == 0
-                    temp_varb = mat_one(1,olt);
-                    mat_one(1,olt) = mat_one(2,olt);
-                    mat_one(2,olt) = temp_varb;
-                    var_a = [var_a,olt];
+            if mat_one(1,olte) == mat_one(1,oly) && olte ~= oly
+                exist_olte = any(var_a(:) == olte);
+                if exist_olte == 0
+                    temp_varb = mat_one(1,olte);
+                    mat_one(1,olte) = mat_one(2,olte);
+                    mat_one(2,olte) = temp_varb;
+                    var_a = [var_a,olte];
                     count = count +1;
                 end    
             end
-            if mat_one(2,olt) == mat_one(2,oly) && olt ~= oly
-                exist_oltb = any(var_a(:) == olt);
-                if exist_oltb == 0
-                    temp_varb = mat_one(2,olt);
-                    mat_one(2,olt) = mat_one(1,olt);
-                    mat_one(1,olt) = temp_varb;
-                    var_a = [var_a,olt];
+            if mat_one(2,olte) == mat_one(2,oly) && olte ~= oly
+                exist_oltbe = any(var_a(:) == olte);
+                if exist_oltbe == 0
+                    temp_varb = mat_one(2,olte);
+                    mat_one(2,olte) = mat_one(1,olte);
+                    mat_one(1,olte) = temp_varb;
+                    var_a = [var_a,olte];
                     count = count +1;
                 end    
              end
@@ -134,30 +127,16 @@ for ole = 1:ner
     desc1(nar+ole) = mat_one(1,nir+ole);
     desc2(nar+ole) = mat_one(2,nir+ole);
 end  
-disp(count_it)
-disp(nir)
-disp(pred1)
-disp(pred2)
-disp(desc1)
-disp(desc2)
-%disp('var_a')
-%disp(var_a)
-%disp('mat_one')
-%disp(mat_one)
-%disp(fatal_error)
-
-
 %and the last just for security we check the last time
 %for repeat values.
 
 
 for ot = 1:18
     for op = 1:18
-        if desc1(1,ot) == desc1(1,op) && ot ~= op
-            disp('fatal Global error')
-        end
+        
         if desc2(1,ot) == desc2(1,op) && ot ~= op
-            disp('fatal Global error')
+            disp('fatal Global error line 2')
+           
         end
 
     end
@@ -165,3 +144,7 @@ end
 
  
 end
+
+
+
+
